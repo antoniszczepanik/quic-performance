@@ -13,6 +13,7 @@ pkgs.mkShell {
     pkgs.wget
     pkgs.gnutar
     pkgs.zlib
+    pkgs.mkcert
   ];
   shellHook = ''
     echo "Hello from Nginx shell!"

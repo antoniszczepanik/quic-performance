@@ -23,3 +23,10 @@ cd nginx-quic-55b38514729b
 
 make
 make install
+
+# Create random certificates for a server to work with.
+# TODO: How to create a *valid* certificate for this server? Do we need a dns record?
+mkcert \
+  -key-file /home/ubuntu/.local/opt/nginx/conf/localhost-key.pem \
+  -cert-file .local/opt/nginx/conf/localhost.pem \
+  localhost
