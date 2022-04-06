@@ -20,7 +20,6 @@ resource "aws_security_group" "allow_quic" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-
   egress {
     from_port        = 0
     to_port          = 0

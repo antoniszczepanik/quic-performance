@@ -2,17 +2,13 @@
 #!nix-shell shell.nix
 #!nix-shell -i bash
 
-# Install nix
-# sh <(curl -L https://nixos.org/nix/install) --no-daemon
-# . /home/ubuntu/.nix-profile/etc/profile.d/nix.sh # or logout & login
-
-set -euo pipefail
+set -exou pipefail
 
 # Download nginx
 wget https://hg.nginx.org/nginx-quic/archive/55b38514729b.tar.gz --no-check-certificate
 tar xf 55b38514729b.tar.gz
 
-# Configure & build nginx
+# Configure & build
 cd nginx-quic-55b38514729b
 ./auto/configure --prefix="/home/ubuntu/.local/opt/nginx" \
                  --with-http_v3_module       \
@@ -24,9 +20,7 @@ cd nginx-quic-55b38514729b
 make
 make install
 
-# Create random certificates for a server to work with.
-# TODO: How to create a *valid* certificate for this server? Do we need a dns record?
 mkcert \
   -key-file /home/ubuntu/.local/opt/nginx/conf/localhost-key.pem \
-  -cert-file .local/opt/nginx/conf/localhost.pem \
+  -cert-file /home/ubuntu/.local/opt/nginx/conf/localhost.pem \
   localhost
