@@ -1,3 +1,15 @@
+variable "GCLOUD_STACK_ID" {
+  type        = string
+  description = "Graphana stack ID"
+  //sensitive   = true
+}
+
+variable "GCLOUD_API_KEY" {
+  type        = string
+  description = "Graphana API KEY"
+  //sensitive   = true
+}
+
 resource "aws_instance" "nginx-server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.medium"
@@ -31,29 +43,40 @@ resource "aws_instance" "nginx-server" {
     destination = "/home/ubuntu/shell.nix"
   }
 
+  provisioner "file" {
+    source      = "../nginx/setup.sh"
+    destination = "/home/ubuntu/setup.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      // First things first.
-      "echo 'set -o vi' >> .profile",
-      // Install nix.
+      // Run setup script.
+      "chmod +x /home/ubuntu/setup.sh",
       "chmod +x /home/ubuntu/install-nix.sh",
-      "/home/ubuntu/install-nix.sh",
-      // Compile nginx.
-      ". /home/ubuntu/.profile", // Adds nix to PATH.
       "chmod +x /home/ubuntu/install-nginx.sh",
-      "/home/ubuntu/install-nginx.sh",
-      "sudo mv nginx-quic-55b38514729b/objs/nginx /usr/local/bin/nginx",
+      "/home/ubuntu/setup.sh",
+      // Install graphana
+      "wget https://raw.githubusercontent.com/grafana/agent/release/production/grafanacloud-install.sh",
+      "chmod +x grafanacloud-install.sh",
+      "sudo ARCH=amd64 GCLOUD_STACK_ID='${var.GCLOUD_STACK_ID}' GCLOUD_API_KEY='${var.GCLOUD_API_KEY}' GCLOUD_API_URL='https://integrations-api-eu-west.grafana.net' ./grafanacloud-install.sh", 
     ]
   }
 
   provisioner "file" {
     source      = "../nginx/nginx.conf"
-    destination = "/home/ubuntu/.local/opt/nginx/conf/nginx.conf"
+    destination = "/home/ubuntu/.nginx/conf/nginx.conf"
+  }
+
+  provisioner "file" {
+    source      = "../nginx/grafana-agent.yaml"
+    destination = "/home/ubuntu/grafana-agent.yaml"
   }
 
   provisioner "remote-exec" {
     inline = [
       "sudo nginx",
+      "sudo mv /home/ubuntu/grafana-agent.yaml /etc/grafana-agent.yaml",
+      "sudo systemctl restart grafana-agent.service"
     ]
   }
 

@@ -6,3 +6,4 @@
 .gitsecret/keys/random_seed
 !*.secret
 terraform/set_env_vars.sh
+nginx/grafana-agent.yaml
