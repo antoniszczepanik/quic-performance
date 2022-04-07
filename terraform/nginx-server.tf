@@ -1,9 +1,13 @@
 resource "aws_instance" "nginx-server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = "t3.medium"
   key_name      = "aws_T495_key"
 
-  security_groups = ["allow_quic"]
+  security_groups = [
+    "allow_quic",
+    "allow_ssh",
+    "allow_https",
+  ]
 
   connection {
     type = "ssh"

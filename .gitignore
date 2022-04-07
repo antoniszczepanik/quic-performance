@@ -3,3 +3,6 @@
 *.tfstate.*
 *.hcl
 *.qlog
+.gitsecret/keys/random_seed
+!*.secret
+terraform/set_env_vars.sh

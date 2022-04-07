@@ -1,7 +1,12 @@
 resource "aws_instance" "client" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = "t3.medium"
   key_name      = "aws_T495_key"
+
+
+  security_groups = [
+    "allow_ssh",
+  ]
 
   connection {
     type = "ssh"
@@ -13,7 +18,6 @@ resource "aws_instance" "client" {
     source      = "../nginx/install-nix.sh"
     destination = "/home/ubuntu/install-nix.sh"
   }
-
 
   provisioner "remote-exec" {
     inline = [
