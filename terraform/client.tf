@@ -19,6 +19,11 @@ resource "aws_instance" "client" {
     destination = "/home/ubuntu/install-nix.sh"
   }
 
+  provisioner "file" {
+    source      = "../go-client"
+    destination = "/home/ubuntu/go-client"
+  }
+
   provisioner "remote-exec" {
     inline = [
       // First things first.
