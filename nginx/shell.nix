@@ -3,6 +3,7 @@
 pkgs.mkShell {
   name = "nginx";
   packages = [
+    pkgs.collectd
     pkgs.mercurial
     pkgs.git
     pkgs.cmake

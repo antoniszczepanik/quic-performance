@@ -1,15 +1,3 @@
-variable "GCLOUD_STACK_ID" {
-  type        = string
-  description = "Graphana stack ID"
-  //sensitive   = true
-}
-
-variable "GCLOUD_API_KEY" {
-  type        = string
-  description = "Graphana API KEY"
-  //sensitive   = true
-}
-
 resource "aws_instance" "nginx-server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.medium"
@@ -55,10 +43,6 @@ resource "aws_instance" "nginx-server" {
       "chmod +x /home/ubuntu/install-nix.sh",
       "chmod +x /home/ubuntu/install-nginx.sh",
       "/home/ubuntu/setup.sh",
-      // Install graphana
-      "wget https://raw.githubusercontent.com/grafana/agent/release/production/grafanacloud-install.sh",
-      "chmod +x grafanacloud-install.sh",
-      "sudo ARCH=amd64 GCLOUD_STACK_ID='${var.GCLOUD_STACK_ID}' GCLOUD_API_KEY='${var.GCLOUD_API_KEY}' GCLOUD_API_URL='https://integrations-api-eu-west.grafana.net' ./grafanacloud-install.sh", 
     ]
   }
 
@@ -67,16 +51,9 @@ resource "aws_instance" "nginx-server" {
     destination = "/home/ubuntu/.nginx/conf/nginx.conf"
   }
 
-  provisioner "file" {
-    source      = "../nginx/grafana-agent.yaml"
-    destination = "/home/ubuntu/grafana-agent.yaml"
-  }
-
   provisioner "remote-exec" {
     inline = [
       "sudo nginx",
-      "sudo mv /home/ubuntu/grafana-agent.yaml /etc/grafana-agent.yaml",
-      "sudo systemctl restart grafana-agent.service"
     ]
   }
 
