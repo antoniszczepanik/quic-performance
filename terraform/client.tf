@@ -6,6 +6,7 @@ resource "aws_instance" "client" {
 
   security_groups = [
     "allow_ssh",
+    "allow_tcp_8080",
   ]
 
   connection {
@@ -15,23 +16,37 @@ resource "aws_instance" "client" {
   }
 
   provisioner "file" {
-    source      = "../nginx/install-nix.sh"
+    source      = "../install-nix.sh"
     destination = "/home/ubuntu/install-nix.sh"
   }
 
   provisioner "file" {
-    source      = "../go-client"
-    destination = "/home/ubuntu/go-client"
+    source      = "../client/analysis.ipynb"
+    destination = "/home/ubuntu/analysis.ipynb"
+  }
+
+  provisioner "file" {
+    source      = "../client/shell.nix"
+    destination = "/home/ubuntu/shell.nix"
+  }
+
+  provisioner "file" {
+    source      = "../client/run_notebook.sh"
+    destination = "/home/ubuntu/run_notebook.sh"
+  }
+
+  provisioner "file" {
+    source      = "../client/setup.sh"
+    destination = "/home/ubuntu/setup.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      // First things first.
-      "echo 'set -o vi' >> .profile",
-      // Install nix.
+      "chmod +x /home/ubuntu/setup.sh",
       "chmod +x /home/ubuntu/install-nix.sh",
-      "/home/ubuntu/install-nix.sh",
-      "sudo sysctl -w net.core.rmem_max=2500000", // https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size
+      "chmod +x /home/ubuntu/run_notebook.sh",
+      "/home/ubuntu/setup.sh",
+      // "sudo sysctl -w net.core.rmem_max=2500000", // https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size
     ]
   }
 

@@ -16,7 +16,7 @@ resource "aws_instance" "nginx-server" {
   }
 
   provisioner "file" {
-    source      = "../nginx/install-nix.sh"
+    source      = "../install-nix.sh"
     destination = "/home/ubuntu/install-nix.sh"
   }
 

@@ -12,10 +12,11 @@ tar xf /home/ubuntu/55b38514729b.tar.gz
 cd /home/ubuntu/nginx-quic-55b38514729b
 ./auto/configure --prefix="/home/ubuntu/.nginx" \
                  --with-http_v3_module       \
+                 --with-http_v2_module       \
                  --with-stream_quic_module   \
-                --with-cc-opt="-I../boringssl/include"     \
-                --with-ld-opt="-L../boringssl/build/ssl    \
-                                 -L../boringssl/build/crypto"
+                 --with-cc-opt="-I../boringssl/include"     \
+                 --with-ld-opt="-L../boringssl/build/ssl    \
+                                -L../boringssl/build/crypto"
 
 make
 make install
