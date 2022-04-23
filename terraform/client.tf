@@ -40,11 +40,18 @@ resource "aws_instance" "client" {
     destination = "/home/ubuntu/setup.sh"
   }
 
+  provisioner "file" {
+    source      = "../client/compile-nghttp2.sh"
+    destination = "/home/ubuntu/compile-nghttp2.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x /home/ubuntu/setup.sh",
       "chmod +x /home/ubuntu/install-nix.sh",
       "chmod +x /home/ubuntu/run_notebook.sh",
+      "chmod +x /home/ubuntu/compile-nghttp2.sh",
+      "/home/ubuntu/compile-nghttp2.sh",
       "/home/ubuntu/setup.sh",
       // "sudo sysctl -w net.core.rmem_max=2500000", // https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size
     ]
