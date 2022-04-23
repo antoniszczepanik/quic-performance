@@ -7,6 +7,8 @@ resource "aws_instance" "nginx-server" {
     "allow_quic",
     "allow_ssh",
     "allow_https",
+    "allow_tcp_6969",
+    "allow_udp_6969",
   ]
 
   connection {
@@ -36,12 +38,18 @@ resource "aws_instance" "nginx-server" {
     destination = "/home/ubuntu/setup.sh"
   }
 
+  provisioner "file" {
+    source      = "../nginx/run-iperf.sh"
+    destination = "/home/ubuntu/run-iperf.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       // Run setup script.
       "chmod +x /home/ubuntu/setup.sh",
       "chmod +x /home/ubuntu/install-nix.sh",
       "chmod +x /home/ubuntu/install-nginx.sh",
+      "chmod +x /home/ubuntu/run-iperf.sh",
       "/home/ubuntu/setup.sh",
     ]
   }

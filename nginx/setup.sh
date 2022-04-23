@@ -9,3 +9,4 @@ echo "<p> Hello, World! </p>" > /home/ubuntu/data/index.html
 head -c 2G /dev/urandom > /home/ubuntu/data/2g.txt
 source ~/.profile # Make sure nix is in the path.
 ./install-nginx.sh
+./run-iperf.sh

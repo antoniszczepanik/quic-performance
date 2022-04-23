@@ -10,7 +10,6 @@ in
 pkgs.mkShell {
     packages = [
         pkgs.collectd
-        pkgs.nghttp2
         python-with-my-packages
     ];
 }
