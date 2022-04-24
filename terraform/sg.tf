@@ -86,9 +86,9 @@ resource "aws_security_group" "allow_tpc_8080" {
   }
 }
 
-resource "aws_security_group" "allow_tpc_6969" {
-  name        = "allow_tcp_6969"
-  description = "Security group allowing TCP traffic at 6969"
+resource "aws_security_group" "allow_tests" {
+  name        = "allow_tests"
+  description = "Allow throughput and latency tests"
 
   ingress {
     description      = "TCP"
@@ -99,19 +99,6 @@ resource "aws_security_group" "allow_tpc_6969" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
-resource "aws_security_group" "allow_udp_6969" {
-  name        = "allow_udp_6969"
-  description = "Security group allowing UDP traffic at 6969"
-
   ingress {
     description      = "UDP"
     from_port        = 6969
@@ -120,21 +107,6 @@ resource "aws_security_group" "allow_udp_6969" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
-
-resource "aws_security_group" "allow_icmp" {
-  name        = "allow_icmp"
-  description = "Security group allowing ICMP traffic"
-
   ingress {
     description      = "ICMP"
     from_port = 8

@@ -7,9 +7,7 @@ resource "aws_instance" "nginx-server" {
     "allow_quic",
     "allow_ssh",
     "allow_https",
-    "allow_tcp_6969",
-    "allow_udp_6969",
-    "allow_icmp",
+    "allow_tests",
   ]
 
   connection {
