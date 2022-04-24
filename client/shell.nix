@@ -9,6 +9,7 @@ let
 in
 pkgs.mkShell {
     packages = [
+        pkgs.iperf3
         pkgs.collectd
         python-with-my-packages
     ];

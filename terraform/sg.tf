@@ -129,3 +129,26 @@ resource "aws_security_group" "allow_udp_6969" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+
+
+resource "aws_security_group" "allow_icmp" {
+  name        = "allow_icmp"
+  description = "Security group allowing ICMP traffic"
+
+  ingress {
+    description      = "ICMP"
+    from_port = 8
+    to_port = 0
+    protocol = "icmp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
