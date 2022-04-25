@@ -19,7 +19,7 @@ cd ..
 
 
 echo "========== Compile nghttp3 ============"
-git clone --depth 1 -b v0.2.0 https://github.com/ngtcp2/nghttp3
+git clone --depth 1 -b v0.4.0 https://github.com/ngtcp2/nghttp3
 cd nghttp3
 autoreconf -i
 ./configure --prefix=$PWD/build --enable-lib-only
@@ -28,7 +28,7 @@ make install
 cd ..
 
 echo "========== Compile ngtcp2 ============"
-git clone --depth 1 -b v0.3.0 https://github.com/ngtcp2/ngtcp2
+git clone --depth 1 -b v0.4.0 https://github.com/ngtcp2/ngtcp2
 cd ngtcp2
 autoreconf -i
 ./configure --prefix=$PWD/build --enable-lib-only \
