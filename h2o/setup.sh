@@ -14,7 +14,7 @@ sudo apt install -y g++ make cmake build-essential libssl-dev binutils libtool z
 # Create data to serve
 mkdir -p /home/ubuntu/data
 echo "<p> Hello, World! </p>" > /home/ubuntu/data/index.html
-head -c 2G /dev/urandom > /home/ubuntu/data/2g.txt
+head -c 1G /dev/urandom > /home/ubuntu/data/1g.txt
 source ~/.profile # Make sure nix is in the path.
 
 # Increase UDP recieve  buffer sizes.
@@ -41,4 +41,4 @@ mkcert \
   localhost
 
 # Start h2o
-sudo /usr/local/bin/h2o -c h2o.config
+sudo /usr/local/bin/h2o -c h2o.config -m daemon
