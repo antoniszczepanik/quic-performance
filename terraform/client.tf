@@ -31,8 +31,13 @@ resource "aws_instance" "client" {
   }
 
   provisioner "file" {
-    source      = "../client/run_notebook.sh"
-    destination = "/home/ubuntu/run_notebook.sh"
+    source      = "../client/run-notebook.sh"
+    destination = "/home/ubuntu/run-notebook.sh"
+  }
+
+  provisioner "file" {
+    source      = "../client/run.sh"
+    destination = "/home/ubuntu/run.sh"
   }
 
   provisioner "file" {
@@ -49,11 +54,11 @@ resource "aws_instance" "client" {
     inline = [
       "chmod +x /home/ubuntu/setup.sh",
       "chmod +x /home/ubuntu/install-nix.sh",
-      "chmod +x /home/ubuntu/run_notebook.sh",
+      "chmod +x /home/ubuntu/run-notebook.sh",
       "chmod +x /home/ubuntu/compile-nghttp2.sh",
+      "chmod +x /home/ubuntu/run.sh",
       "/home/ubuntu/compile-nghttp2.sh",
       "/home/ubuntu/setup.sh",
-      // "sudo sysctl -w net.core.rmem_max=2500000", // https://github.com/lucas-clemente/quic-go/wiki/UDP-Receive-Buffer-Size
     ]
   }
 
