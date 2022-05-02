@@ -1,0 +1,17 @@
+{
+        debug
+        https_port 443
+        skip_install_trust true
+
+        servers :443 {
+                protocol {
+                        experimental_http3
+                }
+        }
+}
+
+https://localhost:443 {
+        file_server /home/ubuntu/data
+        tls /home/ubuntu/localhost.pem /home/ubuntu/localhost-key.pem {
+        }
+}
