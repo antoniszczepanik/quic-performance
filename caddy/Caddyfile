@@ -1,5 +1,4 @@
 {
-        debug
         https_port 443
         skip_install_trust true
 
@@ -10,8 +9,9 @@
         }
 }
 
-https://localhost:443 {
-        file_server /home/ubuntu/data
-        tls /home/ubuntu/localhost.pem /home/ubuntu/localhost-key.pem {
+https://caddy.antoniszczepanik.com {
+        file_server {
+            root /home/ubuntu/data
         }
+        tls /etc/letsencrypt/live/caddy.antoniszczepanik.com/fullchain.pem /etc/letsencrypt/live/caddy.antoniszczepanik.com/privkey.pem
 }

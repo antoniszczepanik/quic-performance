@@ -13,6 +13,10 @@ source ~/.profile # Make sure nix is in the path.
 sudo sysctl -w net.core.rmem_max=21299200
 sudo sysctl -w net.core.rmem_default=21299200
 
-wget https://github.com/caddyserver/caddy/releases/download/v2.5.0/caddy_2.5.0_linux_amd64.tar.gz
-tar xf caddy_2.5.0_linux_amd64.tar.gz
-sudo mv caddy /usr/local/bin/caddy
+wget https://openlitespeed.org/packages/openlitespeed-1.7.15.tgz
+tar xf openlitespeed-1.7.15.tgz
+mv /home/ubuntu/ols.conf /home/ubuntu/openlitespeed/ols.conf
+sudo ./openlitespeed/install.sh
+sudo mv /home/ubuntu/httpd_config.conf /usr/local/lsws/conf/httpd_config.conf
+sudo mv /home/ubuntu/vhconf.conf /usr/local/lsws/conf/vhosts/Example/vhconf.conf
+

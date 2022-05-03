@@ -21,10 +21,4 @@ cd /home/ubuntu/nginx-quic-55b38514729b
 make
 make install
 
-mkcert \
-  -key-file /home/ubuntu/.nginx/conf/localhost-key.pem \
-  -cert-file /home/ubuntu/.nginx/conf/localhost.pem \
-  localhost
-
 sudo mv /home/ubuntu/nginx-quic-55b38514729b/objs/nginx /usr/local/bin/nginx
-

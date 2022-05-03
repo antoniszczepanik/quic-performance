@@ -14,4 +14,3 @@ sudo sysctl -w net.core.rmem_max=21299200
 sudo sysctl -w net.core.rmem_default=21299200
 
 ./install-nginx.sh
-screen -dm bash -c "source ~/.profile; /home/ubuntu/run-iperf.sh; exec sh"
