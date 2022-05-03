@@ -42,6 +42,11 @@ resource "aws_instance" "nginx-server" {
     destination = "/home/ubuntu/run-iperf.sh"
   }
 
+  provisioner "file" {
+    source      = "../nginx/run.sh"
+    destination = "/home/ubuntu/run.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       // Run setup script.
@@ -49,6 +54,7 @@ resource "aws_instance" "nginx-server" {
       "chmod +x /home/ubuntu/install-nix.sh",
       "chmod +x /home/ubuntu/install-nginx.sh",
       "chmod +x /home/ubuntu/run-iperf.sh",
+      "chmod +x /home/ubuntu/run.sh",
       "/home/ubuntu/setup.sh",
     ]
   }
@@ -58,16 +64,16 @@ resource "aws_instance" "nginx-server" {
     destination = "/home/ubuntu/.nginx/conf/nginx.conf"
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo nginx",
-    ]
-  }
-
   tags = {
     Name = "nginx-quic-server"
   }
 }
+
+resource "aws_eip_association" "nginx_assoc" {
+  instance_id   = aws_instance.nginx-server.id
+  allocation_id = "eipalloc-0170d0e00ec50fee1"
+}
+
 
 output "nginx_server_ip" {
   description = "Public IP of nginx-server"

@@ -99,6 +99,17 @@ resource "aws_security_group" "allow_tests" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  // 80 TCP is required to obtain certificate via cerbot.
+  ingress {
+    description      = "TCP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+
   ingress {
     description      = "UDP"
     from_port        = 6969
@@ -109,9 +120,9 @@ resource "aws_security_group" "allow_tests" {
   }
   ingress {
     description      = "ICMP"
-    from_port = 8
-    to_port = 0
-    protocol = "icmp"
+    from_port        = 8
+    to_port          = 0
+    protocol         = "icmp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }

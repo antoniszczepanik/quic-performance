@@ -22,6 +22,11 @@ resource "aws_instance" "caddy-server" {
   }
 
   provisioner "file" {
+    source      = "../caddy/run.sh"
+    destination = "/home/ubuntu/run.sh"
+  }
+
+  provisioner "file" {
     source      = "../caddy/Caddyfile"
     destination = "/home/ubuntu/Caddyfile"
   }
@@ -35,6 +40,7 @@ resource "aws_instance" "caddy-server" {
     inline = [
       "chmod +x /home/ubuntu/setup.sh",
       "chmod +x /home/ubuntu/install-nix.sh",
+      "chmod +x /home/ubuntu/run.sh",
       "/home/ubuntu/setup.sh",
     ]
   }
@@ -42,6 +48,11 @@ resource "aws_instance" "caddy-server" {
   tags = {
     Name = "caddy-quic-server"
   }
+}
+
+resource "aws_eip_association" "caddy_assoc" {
+  instance_id   = aws_instance.caddy-server.id
+  allocation_id = "eipalloc-084baabcd89983a97"
 }
 
 output "caddy_server_ip" {

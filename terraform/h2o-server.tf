@@ -21,6 +21,10 @@ resource "aws_instance" "h2o-server" {
     destination = "/home/ubuntu/setup.sh"
   }
 
+  provisioner "file" {
+    source      = "../h2o/run.sh"
+    destination = "/home/ubuntu/run.sh"
+  }
 
   provisioner "file" {
     source      = "../h2o/h2o.config"
@@ -31,6 +35,7 @@ resource "aws_instance" "h2o-server" {
     inline = [
       // Run setup script.
       "chmod +x /home/ubuntu/setup.sh",
+      "chmod +x /home/ubuntu/run.sh",
       "/home/ubuntu/setup.sh",
     ]
   }
@@ -39,6 +44,12 @@ resource "aws_instance" "h2o-server" {
     Name = "h2o-quic-server"
   }
 }
+
+resource "aws_eip_association" "h2o_assoc" {
+  instance_id   = aws_instance.h2o-server.id
+  allocation_id = "eipalloc-0e0d242bef827c9b8"
+}
+
 
 output "h2o_server_ip" {
   description = "Public IP of h2o-server"
