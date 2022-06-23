@@ -17,6 +17,11 @@ resource "aws_instance" "caddy-server" {
   }
 
   provisioner "file" {
+    source      = "../stat-server"
+    destination = "/home/ubuntu/stat-server"
+  }
+
+  provisioner "file" {
     source      = "../caddy/setup.sh"
     destination = "/home/ubuntu/setup.sh"
   }

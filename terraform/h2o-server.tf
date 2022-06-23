@@ -17,6 +17,11 @@ resource "aws_instance" "h2o-server" {
   }
 
   provisioner "file" {
+    source      = "../stat-server"
+    destination = "/home/ubuntu/stat-server"
+  }
+
+  provisioner "file" {
     source      = "../h2o/setup.sh"
     destination = "/home/ubuntu/setup.sh"
   }

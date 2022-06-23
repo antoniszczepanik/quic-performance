@@ -28,7 +28,7 @@ make install
 cd ..
 
 echo "========== Compile ngtcp2 ============"
-git clone --depth 1 -b v0.4.0 https://github.com/ngtcp2/ngtcp2
+git clone --depth 1 -b v0.5.0 https://github.com/ngtcp2/ngtcp2
 cd ngtcp2
 autoreconf -i
 ./configure --prefix=$PWD/build --enable-lib-only \

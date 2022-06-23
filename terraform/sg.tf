@@ -109,6 +109,14 @@ resource "aws_security_group" "allow_tests" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+    description      = "TCP"
+    from_port        = 2137
+    to_port          = 2137
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   ingress {
     description      = "UDP"
@@ -118,6 +126,7 @@ resource "aws_security_group" "allow_tests" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+
   ingress {
     description      = "ICMP"
     from_port        = 8

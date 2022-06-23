@@ -1,6 +1,6 @@
 resource "aws_instance" "client" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.medium"
+  instance_type = "t3.xlarge"
   key_name      = "aws_T495_key"
 
 
