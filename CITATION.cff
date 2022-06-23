@@ -1,8 +1,0 @@
-cff-version: 1.2.0
-message: "It's supposedly easier to cite this software if I use this feature."
-authors:
-  - family-names: Szczepanik
-    given-names: Antoni
-title: "HTTP/3 vs HTTP/2 in mainstream FLOSS webservers"
-version: 0.0.0
-date-released: 2022-05-01
